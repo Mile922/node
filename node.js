@@ -101,6 +101,25 @@ app.get("/add",(req,res)=>{
         res.send('添加成功')
 });
 
+//管理员下架电影
+app.get("/delete",(req,res)=>{
+	var postData = {
+        moviename: req.query.moviename,
+    };
+      
+        mydata2.deleteOne({name:req.query.moviename},(err,data)=>{
+            if(err){
+                res.send('删除失败')
+            }
+            else{
+                res.send('删除成功！！')
+            }
+        })
+
+  
+
+});
+
 //用户查询电影名
 app.get("/find",(req,res)=>{
 	var postData = {
@@ -116,12 +135,16 @@ app.get("/find",(req,res)=>{
                 res.end(str)
                 }
             });
-
-            //res.send('电影名：'+'《'+data.moviename+'》'+'  ,  '+'导演:'+data.director)
+             //res.send('电影名：'+'《'+data.moviename+'》'+'  ,  '+'导演:'+data.director)
         }else{
             res.send('未查询到该电影')
         }
     } )
+});
+
+//查询所有已上架的电影
+app.get("/findall",(req,res)=>{
+
 });
 
 
