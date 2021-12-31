@@ -109,10 +109,10 @@ app.get("/delete",(req,res)=>{
       
         mydata2.deleteOne({name:req.query.moviename},(err,data)=>{
             if(err){
-                res.send('删除失败')
+                res.send('下架失败')
             }
             else{
-                res.send('删除成功！！')
+                res.send('下架成功！！')
             }
         })
 
@@ -144,7 +144,17 @@ app.get("/find",(req,res)=>{
 
 //查询所有已上架的电影
 app.get("/findall",(req,res)=>{
+    // mydata2.find({}).toString(function(err,res){
+    //     if(err){
+    //         console.log(err)
+    //     }else{
+    //         console.log(res)
+    //     }
+    // })
 
+    mydata2.find({},(err,data)=>{console.log(data)
+    res.send(data)
+    })
 });
 
 
