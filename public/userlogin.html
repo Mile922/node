@@ -78,11 +78,15 @@
  
 <body>
     <div id="loginDiv">
-        <form action="" id="form">
-            <h1 style="text-align: center;color: aliceblue;">welcome</h1>
-            <a href="/userlogin.html">用户登录</a>
-            <a href="/managelogin.html">管理员登录</a>
-            <a href="/register.html">用户注册</a>
+        <form action="login" id="form" method="GET">
+            <h1 style="text-align: center;color: aliceblue;">用户登录</h1>
+            <p>用户名:<input id="username" type="text" name="username"><label id="name_trip"></label></p>
+ 
+            <p>密  码:<input id="password" type="password" name="password"><label id="password_trip"></label></p>
+ 
+            <div style="text-align: center;margin-top: 30px;">
+                <input type="submit" class="button" value="登录">
+            </div>
         </form>
     </div>
  
