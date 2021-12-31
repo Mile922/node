@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+const ejs=require('ejs')
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://172.21.2.236:27017/190110910627');
 mongoose.connection.once("open",err=>{
@@ -107,8 +108,16 @@ app.get("/find",(req,res)=>{
     };
     mydata2.findOne({moviename: postData.moviename}, function (err, data) {
         console.log('data',data)
-        if(data){
-            res.send('电影名：'+'《'+data.moviename+'》'+'  ,  '+'导演:'+data.director)
+        if(data){   
+            ejs.renderFile('result.html', {result:'电影名:'+'《'+data.moviename+'》'+'导演:'+data.director}, function(err, str){
+                if(err){console.log("File is error.")}
+                else {
+                res.setHeader('Content-Type', 'text/html')
+                res.end(str)
+                }
+            });
+
+            //res.send('电影名：'+'《'+data.moviename+'》'+'  ,  '+'导演:'+data.director)
         }else{
             res.send('未查询到该电影')
         }
