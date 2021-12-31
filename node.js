@@ -7,6 +7,7 @@ mongoose.connection.once("open",err=>{
         throw err;
     console.log("database connection success!!");
 })
+//用户管理员
 const schema = {
     username:{
         type:String,
@@ -19,8 +20,21 @@ const schema = {
     }
 
 }
+
+const movieschema = mongoose.Schema({
+    moviename:{
+        type:String,
+        require:true
+    },
+    director:{
+        type:String,
+        require:true
+    }
+});
+
 const mydata = mongoose.model('testuser02', schema);
 const mydata1 = mongoose.model('manager', schema);
+const mydata2 = mongoose.model('movie', movieschema);
 app.use('/',express.static('public'))
 
 app.get("/register",(req,res)=>{
@@ -52,7 +66,7 @@ app.get("/managelogin",(req,res)=>{
     mydata1.findOne({username: postData.username,password: postData.password}, function (err, data) {
         console.log('data',data)
         if(data){
-            res.send('管理员页面');
+            res.sendfile('./public/manager.html'); 
         }else{
             res.send('账号或密码错误')
         }
@@ -68,11 +82,39 @@ app.get("/login",(req,res)=>{
     mydata.findOne({username: postData.username,password: postData.password}, function (err, data) {
         console.log('data',data)
         if(data){
-            res.send('用户页面');
+            res.sendfile('./public/user.html'); 
         }else{
             res.send('账号或密码错误')
         }
     } )
 });
+
+//管理员添加电影
+app.get("/add",(req,res)=>{
+	var postData = {
+        moviename: req.query.moviename,
+        director: req.query.director,
+    };
+    const m = new mydata2({ moviename: req.query.moviename,director:req.query.director });
+        m.save();
+        res.send('添加成功')
+});
+
+//用户查询电影名
+app.get("/find",(req,res)=>{
+	var postData = {
+        moviename: req.query.moviename,
+    };
+    mydata2.findOne({moviename: postData.moviename}, function (err, data) {
+        console.log('data',data)
+        if(data){
+            res.send('电影名：'+'《'+data.moviename+'》'+'  ,  '+'导演:'+data.director)
+        }else{
+            res.send('未查询到该电影')
+        }
+    } )
+});
+
+
 
 app.listen(10627)
