@@ -144,17 +144,14 @@ app.get("/find",(req,res)=>{
 
 //查询所有已上架的电影
 app.get("/findall",(req,res)=>{
-    // mydata2.find({}).toString(function(err,res){
-    //     if(err){
-    //         console.log(err)
-    //     }else{
-    //         console.log(res)
-    //     }
-    // })
+    var i=0
 
-    mydata2.find({},(err,data)=>{console.log(data)
-    res.send(data)
+    
+    mydata2.find({},(err,data)=>{console.log(data[0]._doc.moviename)
+    res.send(data[0]._doc.moviename)
     })
+
+    
 });
 
 
