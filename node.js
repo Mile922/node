@@ -36,9 +36,23 @@ const movieschema = mongoose.Schema({
     }
 });
 
+const buyschema = {
+    userbuy:{
+        type:String,
+        unique:true,
+        require:true
+    },
+    buy:{
+        type:String,
+        require:true
+    }
+
+}
+
 const mydata = mongoose.model('testuser02', schema);
 const mydata1 = mongoose.model('manager', schema);
 const mydata2 = mongoose.model('movie', movieschema);
+const mydata3 = mongoose.model('dingdan', buyschema);
 app.use('/',express.static('public'))
 
 app.get("/register",(req,res)=>{
@@ -145,19 +159,6 @@ app.get("/find",(req,res)=>{
     } )
 });
 
-//查询所有已上架的电影
-app.get("/findall",(req,res)=>{
-    // ejs.renderFile('result.html', {result:mydata2.find().select('moviename director -_id')}, function(err, str){
-    //     if(err){console.log("File is error.")}
-    //     else {
-    //     res.setHeader('Content-Type', 'text/html')
-    //     res.end(str)
-    //     }
-    // });
-
-    mydata2.find().select('moviename director -_id').then(result=>res.send(result))
-    
-});
 
 // 呈递在售电影信息列表页面
 app.get('/list', async (req, res) =>{
@@ -169,6 +170,23 @@ app.get('/list', async (req, res) =>{
 	})
 	res.end(html)
 })
+
+//用户buy电影
+app.get("/buy",(req,res)=>{
+	var postData = {
+        buym: req.query.buym,
+    };
+
+    mydata2.findOne({moviename: postData.buym}, function (err, data) {
+        if(data){   
+            const b = new mydata3({ userbuy: req.query.usern,buy:req.query.buym });
+            b.save();
+            res.send('购买成功')
+        }else{
+            res.send('未查询到该电影')
+        }
+    } )
+});
 
 
 app.listen(10627)

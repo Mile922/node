@@ -4,15 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>用户页面</title>
+    <a href="/buymovie.html">购买电影</a>
+    <form action="list" id="form" method="GET" >
+        <input type="submit" class="button"  value="查询所有已上架的电影">
+    </form>
     <form action="find" id="form" method="GET">
         <p>按电影名查询:<input  type="text" name="moviename"></p>
             <input type="submit" class="button" value="查询">
         </form>
+        <!-- <form action="buy" method="GET">
         <p>添加电影到购物车:<input  type="text" name="buymovie"></p>
-        <input type="submit" class="button" value="添加">
-        <form action="list" id="form" method="GET" >
-            <input type="submit" class="button"  value="查询所有已上架的电影">
         </form>
+        <input type="submit" class="button" value="添加"> -->
 
 </head>
 </body>
