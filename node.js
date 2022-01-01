@@ -1,7 +1,10 @@
 const express = require("express")
 const app = express()
+const template = require('art-template');
 const ejs=require('ejs')
+const path = require('path');
 const mongoose = require('mongoose');
+template.defaults.root = path.join(__dirname, 'public');
 mongoose.connect('mongodb://172.21.2.236:27017/190110910627');
 mongoose.connection.once("open",err=>{
     if(err)
@@ -156,6 +159,16 @@ app.get("/findall",(req,res)=>{
     
 });
 
+// 呈递在售电影信息列表页面
+app.get('/list', async (req, res) =>{
+	// 查询电影信息
+	let students = await mydata2.find();
+	console.log(students);
+	let html = template('list.art', {
+		movies: students
+	})
+	res.end(html)
+})
 
 
 app.listen(10627)

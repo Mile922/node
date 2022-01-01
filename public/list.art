@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>学员信息</title>
+	<link rel="stylesheet" href="./list.css">
+</head>
+<body>
+	<table>
+		<caption>在售电影</caption>
+		<tr>
+			<th>电影名</th>
+			<th>导演</th>
+
+		</tr>
+		{{each movies}}
+			<tr>
+				<th>{{$value.moviename}}</th>
+				<th>{{$value.director}}</th>
+			</tr>
+		{{/each}}
+		
+	</table>
+</body>
+</html>
