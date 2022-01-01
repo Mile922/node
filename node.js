@@ -144,13 +144,15 @@ app.get("/find",(req,res)=>{
 
 //查询所有已上架的电影
 app.get("/findall",(req,res)=>{
-    var i=0
+    // ejs.renderFile('result.html', {result:mydata2.find().select('moviename director -_id')}, function(err, str){
+    //     if(err){console.log("File is error.")}
+    //     else {
+    //     res.setHeader('Content-Type', 'text/html')
+    //     res.end(str)
+    //     }
+    // });
 
-    
-    mydata2.find({},(err,data)=>{console.log(data[0]._doc.moviename)
-    res.send(data[0]._doc.moviename)
-    })
-
+    mydata2.find().select('moviename director -_id').then(result=>res.send(result))
     
 });
 
